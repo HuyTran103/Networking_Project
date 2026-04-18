@@ -1,0 +1,79 @@
+To install Plex on Docker for Linux users: 
+
+Make sure you already have Docker-Portainer installed: 
+
+Go to linuxserver/plex : https://hub.docker.com/r/linuxserver/plex to follow the tutorial
+
+Step 1: Go to Portainer.io
+click Local -> Container -> Add Container (blue background) 
+
+Step 2: Creating new Container
+a) Name the Container: make sure it is named "Plex", no using other names because it won't work
+
+b) in the Image add "linuxserver/plex:latest" after the "docker.io"
+
+c) Scroll down to see the Advanced Container Settings
+
+For Network: 
+Change the Network: bridge -> Network: host
+
+For Env:
+Add environment variables, for each environment variable, write these (follow docker-compose on linuxserver/plex): 
+
+name: PUID , value: 1000 
+name: PGID , value: 1000
+(if you are wondering how to check PUID and PGID, go the Terminal -> type "ID" to check what value of your PUID and PGID is, it is usually valued 1000 for both) 
+name: VERSION, value: docker
+OPTIONAL:
+name: PLEX_CLAIM, value: (follow  https://plex.tv/claim to get the code, use the gmail that you are gonne use for PLEX, it get expired for every 4 mins, make sure to deploy the container before having to change the claim code) 
+
+For Volumes: 
+Before jumping in the Volume Mapping, you need to create folders for TV, Movies, Music,... in your directory/your computer (make sure put TV folder, Music folder and Movies folder in one big folder: 
+
+For example:
+In folder called Plex, containing TV folder, Movies folder, Music folder
+
+After that, In Volume Mapping: 
+click add "map additional volume"
+Make sure to have CONFIG in the Volume Mapping to make Plex running:
+
+for Config 
+change Bind -> Volume (if not changed)
+Change Read-only -> Writable (if not change)
+In container name: /config , in volume: write "portainer_data = local"
+
+for Music folder:
+Change Volume -> Bind
+Change Read-only -> Writable (if not change)
+In container name: /Music , in host: /home/username/.../Music (Copy the location from your Files) 
+
+for TV folder:
+Change Volume -> Bind
+Change Read-only -> Writable (if not change)
+In container name: /TV , in host: /home/username/.../TV (Copy the location from your Files) 
+
+for Movies folder:
+Change Volume -> Bind
+Change Read-only -> Writable (if not change)
+In container name: /Movies , in host: /home/username/.../Movies (Copy the location from your Files) 
+
+d) For Restart Policy:
+Change to "Unless Stopped"
+
+After all that done, we can start "DEPLOY THE CONTAINER"
+
+then we go the URL and Type: http://(your ip address):32400 to get to the Plex
+
+from there follow each step that Plex require, to the "Add Libraries" section, 
+
+click "Manages Libraries" -> Movies
+add libraries -> choose the Movies folder that you create earlier -> Add
+
+Do the same for the rest of the folders and you get your self a Plex Media Server containing TV and Shows you want to watch 
+
+GOOD LUCK!!
+
+
+
+
+
