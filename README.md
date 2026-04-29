@@ -85,3 +85,18 @@ for home automation, accessible from any device on the same network.
   network via `http://<your_ip>:8123`
 - **Important:** If `homeassistant.local:8123` doesn't load, use the
   IP address directly — find it from `network info` or your router's DHCP list
+
+---
+
+### Setting Up Remote Devices using Twingate
+Step-by-step guide to setting up Twingate for remote access to on-premise
+devices, with optional API automation to discover network resources.
+- Create a Twingate account, set up a Remote Network, and deploy a Connector
+  on a Linux device (e.g. Raspberry Pi) using a generated token and curl command
+- Pre-configure the remote device's WiFi credentials via sudo nmtui before
+  sending it to the remote location
+- Optional: Use Twingate's API with a Python script to auto-discover and create
+  resources (private/public IPs) in the Admin Console
+- Store API credentials in a .env file — never hardcode tokens in scripts
+- **Important:** Always run the Python script in dry-run mode first before live
+  run to preview changes without making them
